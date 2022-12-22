@@ -59,12 +59,12 @@ main section:last-of-type {
 main section:last-of-type > div {
   height: 73px;
   width: 70px;
-  border: solid 2px black;
+  border: solid 2px #7c7c7c;
   /* border-bottom: solid 2px black; */
 }
 
 .black {
-  background-color: black;
+  background-color: #7c7c7c;
 }
 
 .num {
