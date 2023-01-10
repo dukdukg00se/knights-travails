@@ -9,10 +9,10 @@ class Node {
 
 class Tree {
   constructor(startCoord, endCoord) {
-    this.root = this.buildTree(startCoord, endCoord);
+    this.root = this.buildPathTree(startCoord, endCoord);
   }
 
-  listMoves(coord) {
+  getPossibleMoves(coord) {
     let [x, y] = coord;
 
     let mv1 = [x + 1, y + 2];
@@ -30,20 +30,20 @@ class Tree {
     );
   }
 
-  coordsEq(coord1, coord2) {
+  checkCoordsEqual(coord1, coord2) {
     return JSON.stringify(coord1) === JSON.stringify(coord2);
   }
 
-  buildTree(coord1, coord2) {
+  buildPathTree(coord1, coord2) {
     let rootNode = new Node(coord1);
     let queue = [rootNode];
 
     let currentMv = queue.shift();
     while (currentMv) {
-      if (this.coordsEq(currentMv.coord, coord2)) {
+      if (this.checkCoordsEqual(currentMv.coord, coord2)) {
         return currentMv;
       } else {
-        let possibleMoves = this.listMoves(currentMv.coord);
+        let possibleMoves = this.getPossibleMoves(currentMv.coord);
         possibleMoves.forEach(mv => {
           let nextMv = new Node(mv);
           nextMv.parent = currentMv;
@@ -63,7 +63,8 @@ class Tree {
   }
 }
 
-let startPt = [0, 0];
-let endPt = [0, 0];
+let startPt = [0,0];
+let endPt = [1,7];
 
 let kTree = new Tree(startPt, endPt);
+console.log(kTree.getPath())
