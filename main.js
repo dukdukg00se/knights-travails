@@ -35,36 +35,27 @@ class Tree {
   }
 
   buildTree(coord1, coord2) {
-    if (this.coordsEq(coord1, coord2)) return new Node(coord1);
-
-    let queue = [];
-
-    let moves = this.listMoves(coord1);
-    for (let i = 0; i < moves.length; i++) {
-      let mv = new Node(moves[i]);
-      mv.parent = new Node(coord1);
-      queue.push(mv);
-    }
+    let rootNode = new Node(coord1);
+    let queue = [rootNode];
 
     let currentMv = queue.shift();
-
     while (currentMv) {
       if (this.coordsEq(currentMv.coord, coord2)) {
         return currentMv;
       } else {
-        moves = this.listMoves(currentMv.coord);
-        for (let i = 0; i < moves.length; i++) {
-          let mv = new Node(moves[i]);
-          mv.parent = currentMv;
-          queue.push(mv);
-        }
+        let possibleMoves = this.listMoves(currentMv.coord);
+        possibleMoves.forEach(mv => {
+          let nextMv = new Node(mv);
+          nextMv.parent = currentMv;
+          queue.push(nextMv);
+        });
         currentMv = queue.shift();
       }
     }
   }
 
   getPath(node = this.root, ans = []) {
-    if (!node) return node;
+    if (!node) return;
 
     this.getPath(node.parent, ans);
     ans.push(node.coord);
@@ -76,4 +67,3 @@ let startPt = [0, 0];
 let endPt = [0, 0];
 
 let kTree = new Tree(startPt, endPt);
-console.log(kTree.root);
