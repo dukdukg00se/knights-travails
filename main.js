@@ -63,7 +63,13 @@ class Tree {
     }
   }
 
-  
+  getPath(node = this.root, ans = []) {
+    if (!node) return node;
+
+    this.getPath(node.parent, ans);
+    ans.push(node.coord);
+    return ans;
+  }
 }
 
 let startPt = [0, 0];
