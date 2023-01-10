@@ -63,8 +63,47 @@ class Tree {
   }
 }
 
-let startPt = [0,0];
-let endPt = [1,7];
+function createHeader() {
+  const header = document.createElement('header');
+  const pageTitle = document.createElement('h1');
+  pageTitle.textContent = 'Knights Travails';
+  header.append(pageTitle);
+  return header;
+}
 
-let kTree = new Tree(startPt, endPt);
-console.log(kTree.getPath())
+function createUI() {
+  const ui = document.createElement('section');
+  const startBtn = document.createElement('button');
+  const randomBtn = document.createElement('button');
+  const endBtn = document.createElement('button');
+  const travailBtn = document.createElement('button');
+  const clearBtn = document.createElement('button');
+
+  startBtn.type = 'button';
+  randomBtn.type = 'button';
+  endBtn.type = 'button';
+  travailBtn.type = 'button';
+  clearBtn.type = 'button';
+
+  startBtn.textContent = 'Start Position';
+  randomBtn.textContent = 'Random Start';
+  endBtn.textContent = 'End Position';
+  travailBtn.textContent = 'Travail';
+  clearBtn.textContent = 'Clear';
+
+  ui.append(startBtn, randomBtn, endBtn, travailBtn, clearBtn);
+  return ui;
+}
+
+function createBoard() {
+
+}
+
+function createMainContent() {
+  const main = document.createElement('main');
+  main.append(createUI());
+  return main;
+}
+
+const contentContainer = document.getElementById('content');
+contentContainer.append(createHeader(), createMainContent());
