@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 class Node {
   constructor(coord) {
     this.coord = coord;
@@ -95,13 +94,87 @@ function createUI() {
   return ui;
 }
 
-function createBoard() {
+// function createBoard() {
+//   const board = document.createElement('section');
 
+//   for (let i = 0; i < 80; i++) {
+//     let square = document.createElement('div');
+//     square.classList.add('square');
+
+//     if (i % 2 != 0) {
+//       square.classList.add('black');
+//     }
+
+//     board.append(square);
+//   }
+
+//   let j = 7;
+//   for (let i = 0; i < board.children.length; i += 9) {
+    
+//     board.children[i].className = 'num';
+//     if (j >= 0) board.children[i].textContent = j;
+//     j--;
+
+//   }
+
+
+//   return board;
+// }
+
+function createBoard() {
+  const board = document.createElement('section');
+  const rowDescr = document.createElement('div');
+  const columnDescr = document.createElement('div');
+  const checkerBoard = document.createElement('div');
+
+  // console.log(document.body.clientHeight)
+
+  rowDescr.classList.add('row-descr');
+  for (let i = 1; i < 9; i++) {
+    let row = document.createElement('div');
+    row.classList.add('row-nmbrs');
+    row.textContent = i;
+    rowDescr.prepend(row);
+  }
+
+  columnDescr.classList.add('column-descr');
+
+  checkerBoard.classList.add('checker-board');
+  for (let i = 0; i < 8; i++) {
+    let row = document.createElement('div');
+    row.classList.add('row-board');
+
+    for (let j = 0; j < 8; j++) {
+      let square = document.createElement('div');
+      square.classList.add('square');
+      // square.textContent = `x: ${j} y: ${i}`
+
+      if (i % 2) { // Same as (i % 2 != 0)
+        if (j % 2) { // Same as (j % 2 != 0)
+          square.classList.add('black');
+        }
+      } else {
+        if (j % 2 === 0) {
+          square.classList.add('black');
+        }
+      }
+
+      row.append(square);
+    }
+
+    checkerBoard.append(row)
+  }
+
+
+
+
+  board.append(rowDescr, columnDescr, checkerBoard);
+  return board;
 }
 
 function createMainContent() {
   const main = document.createElement('main');
-  main.append(createUI());
+  main.append(createUI(), createBoard());
   return main;
 }
 
