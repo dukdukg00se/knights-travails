@@ -94,51 +94,60 @@ function createUI() {
   return ui;
 }
 
-// function createBoard() {
-//   const board = document.createElement('section');
-
-//   for (let i = 0; i < 80; i++) {
-//     let square = document.createElement('div');
-//     square.classList.add('square');
-
-//     if (i % 2 != 0) {
-//       square.classList.add('black');
-//     }
-
-//     board.append(square);
-//   }
-
-//   let j = 7;
-//   for (let i = 0; i < board.children.length; i += 9) {
-    
-//     board.children[i].className = 'num';
-//     if (j >= 0) board.children[i].textContent = j;
-//     j--;
-
-//   }
-
-
-//   return board;
-// }
-
-function createBoard() {
-  const board = document.createElement('section');
-  const rowDescr = document.createElement('div');
-  const columnDescr = document.createElement('div');
-  const checkerBoard = document.createElement('div');
-
-  // console.log(document.body.clientHeight)
-
-  rowDescr.classList.add('row-descr');
+function createRowMarkers() {
+  const rowMarkersContainer = document.createElement('div');
+  rowMarkersContainer.classList.add('row-marker');
   for (let i = 1; i < 9; i++) {
     let row = document.createElement('div');
-    row.classList.add('row-nmbrs');
+    row.classList.add('row-nmbr');
     row.textContent = i;
-    rowDescr.prepend(row);
+    rowMarkersContainer.prepend(row);
   }
+  return rowMarkersContainer;
+}
 
-  columnDescr.classList.add('column-descr');
+function createColumnMarkers() {
+  const columnMarkersContainer = document.createElement('div');
+  columnMarkersContainer.classList.add('column-marker');
+  for (let i = 0; i < 8; i++) {
+    let column = document.createElement('div');
+    column.classList.add('column-letter');
 
+    let letter;
+    switch (i) {
+      case 0:
+        letter = 'A';
+        break;
+      case 1:
+        letter = 'B';
+        break;
+      case 2:
+        letter = 'C';
+        break;
+      case 3:
+        letter = 'D';
+        break;
+      case 4:
+        letter = 'E';
+        break;
+      case 5:
+        letter = 'F';
+        break;
+      case 6:
+        letter = 'G';
+        break;
+      case 7:
+        letter = 'H';
+    }
+
+    column.textContent = letter;
+    columnMarkersContainer.append(column);
+  }
+  return columnMarkersContainer;
+}
+
+function createCheckerBoard() {
+  const checkerBoard = document.createElement('div');
   checkerBoard.classList.add('checker-board');
   for (let i = 0; i < 8; i++) {
     let row = document.createElement('div');
@@ -148,6 +157,8 @@ function createBoard() {
       let square = document.createElement('div');
       square.classList.add('square');
       // square.textContent = `x: ${j} y: ${i}`
+      square.dataset.xCoord = j;
+      square.dataset.yCoord = i;
 
       if (i % 2) { // Same as (i % 2 != 0)
         if (j % 2) { // Same as (j % 2 != 0)
@@ -158,17 +169,18 @@ function createBoard() {
           square.classList.add('black');
         }
       }
-
+        
       row.append(square);
     }
-
     checkerBoard.append(row)
   }
 
+  return checkerBoard;
+}
 
-
-
-  board.append(rowDescr, columnDescr, checkerBoard);
+function createBoard() {
+  const board = document.createElement('section');
+  board.append(createRowMarkers(), createColumnMarkers(), createCheckerBoard());
   return board;
 }
 
