@@ -62,6 +62,8 @@ class Tree {
   }
 }
 
+/*************/
+
 function createHeader() {
   const header = document.createElement('header');
   const pageTitle = document.createElement('h1');
@@ -79,16 +81,20 @@ function createUI() {
   const clearBtn = document.createElement('button');
 
   startBtn.type = 'button';
-  randomBtn.type = 'button';
-  endBtn.type = 'button';
-  travailBtn.type = 'button';
-  clearBtn.type = 'button';
-
   startBtn.textContent = 'Start Position';
+  startBtn.id = 'start';
+  randomBtn.type = 'button';
   randomBtn.textContent = 'Random Start';
+  randomBtn.id = 'random';
+  endBtn.type = 'button';
   endBtn.textContent = 'End Position';
+  endBtn.id = 'end';
+  travailBtn.type = 'button';
   travailBtn.textContent = 'Travail';
+  travailBtn.id = 'travail';         
+  clearBtn.type = 'button';
   clearBtn.textContent = 'Clear';
+  clearBtn.id = 'clear';
 
   ui.append(startBtn, randomBtn, endBtn, travailBtn, clearBtn);
   return ui;
@@ -105,7 +111,6 @@ function createRowMarkers() {
   }
   return rowMarkersContainer;
 }
-
 function createColumnMarkers() {
   const columnMarkersContainer = document.createElement('div');
   columnMarkersContainer.classList.add('column-marker');
@@ -145,7 +150,6 @@ function createColumnMarkers() {
   }
   return columnMarkersContainer;
 }
-
 function createCheckerBoard() {
   const checkerBoard = document.createElement('div');
   checkerBoard.classList.add('checker-board');
@@ -177,7 +181,6 @@ function createCheckerBoard() {
 
   return checkerBoard;
 }
-
 function createBoard() {
   const board = document.createElement('section');
   board.append(createRowMarkers(), createColumnMarkers(), createCheckerBoard());
@@ -192,3 +195,12 @@ function createMainContent() {
 
 const contentContainer = document.getElementById('content');
 contentContainer.append(createHeader(), createMainContent());
+
+/*************/
+
+
+
+
+
+
+
