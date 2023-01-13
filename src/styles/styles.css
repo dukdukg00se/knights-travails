@@ -53,6 +53,16 @@ button {
   border-radius: 5px;
   height: 4rem;
   min-width: 12rem;
+  transition: all 0.1s ease-out;
+}
+
+button:active,
+button:hover {
+  background-color: #6b2e11;
+}
+
+button:active {
+  border-style: inset;
 }
 
 main section:last-of-type {
@@ -128,6 +138,11 @@ main section:last-of-type {
 
 .black {
   background-color: #632900;
+}
+
+.active {
+  border-style: inset;
+  background-color: #6b2e11;
 }
 
 @media (max-width: 700px) {
