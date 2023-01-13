@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 class Node {
   constructor(coord) {
     this.coord = coord;
@@ -198,7 +199,13 @@ contentContainer.append(createHeader(), createMainContent());
 
 /*************/
 
-
+const userPlaceKnight = document.getElementById('start');
+userPlaceKnight.addEventListener('click', () => {
+  const board = document.querySelector('.checker-board');
+  board.addEventListener('click', (e) => {
+    console.log(e.target)
+  })
+})
 
 
 
