@@ -199,15 +199,82 @@ contentContainer.append(createHeader(), createMainContent());
 
 /*************/
 
-const userPlaceKnight = document.getElementById('start');
-userPlaceKnight.addEventListener('click', () => {
-  const board = document.querySelector('.checker-board');
-  board.addEventListener('click', (e) => {
-    console.log(e.target)
+let userBtns = document.querySelectorAll('button');
+userBtns.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    let selection = e.target;
+    let prevSelection = document.querySelector('.active');
+
+    if (prevSelection && prevSelection.id != selection.id) {
+      prevSelection.classList.remove('active');
+    }
+    
+    // selection.classList.add('active');
+
+    if (selection.id === 'start') {
+      selection.classList.add('active');
+      logCoord();
+      // if (selection.classList.contains('active')) {
+      //   userPlaceKnight();
+      // } else {
+      //   userPlaceKnight(false);
+      // }
+    }
+
+    if (selection.id === 'random') {
+      logCoord(false);
+      randomKnight();
+    }
+
+    if (selection.id === 'end') {
+      selection.classList.add('active');
+      logCoord();
+    }
+
+    if (selection.id = 'travail') {
+      
+    }
+
   })
 })
 
 
+// const startBtn = document.getElementById('start');
+// startBtn.addEventListener('click', (e) => {
+//   startBtn.classList.toggle('active');
+//   let btnActive = e.target.classList.contains('active');
 
+//   userPlaceKnight(btnActive);
+
+// })
+
+
+function logCoord(bool = true) {
+  const board = document.querySelector('.checker-board');
+
+  if (bool) {
+    board.onclick = (e) => {
+      console.log(e.target)
+    }
+  } else {
+    board.onclick = null;
+  }
+
+  // Adds listener everytime button clicked
+  // Can't inspect element to find handlers 
+  // board.addEventListener('click', (e) => {
+  //   console.log(e.target)
+  // })
+
+  // console.dir(!!board.onclick);
+  // console.dir(board);
+}
+
+function randomKnight() {
+  let squares = document.querySelectorAll('.square');
+  let random = Math.floor(Math.random() * 65);
+  console.log(random);
+  console.log(squares[random]);
+}
 
 
