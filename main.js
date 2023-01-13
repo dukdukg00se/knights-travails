@@ -75,29 +75,33 @@ function createHeader() {
 
 function createUI() {
   const ui = document.createElement('section');
-  const startBtn = document.createElement('button');
-  const randomBtn = document.createElement('button');
-  const endBtn = document.createElement('button');
-  const travailBtn = document.createElement('button');
-  const clearBtn = document.createElement('button');
+  const pickStart = document.createElement('button');
+  const randomStart = document.createElement('button');
+  const pickEnd = document.createElement('button');
+  const randomEnd = document.createElement('button');
+  const travail = document.createElement('button');
+  const clear = document.createElement('button');
 
-  startBtn.type = 'button';
-  startBtn.textContent = 'Start Position';
-  startBtn.id = 'start';
-  randomBtn.type = 'button';
-  randomBtn.textContent = 'Random Start';
-  randomBtn.id = 'random';
-  endBtn.type = 'button';
-  endBtn.textContent = 'End Position';
-  endBtn.id = 'end';
-  travailBtn.type = 'button';
-  travailBtn.textContent = 'Travail';
-  travailBtn.id = 'travail';         
-  clearBtn.type = 'button';
-  clearBtn.textContent = 'Clear';
-  clearBtn.id = 'clear';
+  pickStart.type = 'button';
+  pickStart.textContent = 'Pick Start';
+  pickStart.id = 'start';
+  randomStart.type = 'button';
+  randomStart.textContent = 'Random Start';
+  randomStart.id = 'random';
+  pickEnd.type = 'button';
+  pickEnd.textContent = 'Pick End';
+  pickEnd.id = 'end';
+  randomEnd.type = 'button';
+  randomEnd.textContent = 'Random End';
+  randomEnd.id = 'random';
+  travail.type = 'button';
+  travail.textContent = 'Travail';
+  travail.id = 'travail';         
+  clear.type = 'button';
+  clear.textContent = 'Clear';
+  clear.id = 'clear';
 
-  ui.append(startBtn, randomBtn, endBtn, travailBtn, clearBtn);
+  ui.append(pickStart, randomStart, pickEnd, randomEnd, travail, clear);
   return ui;
 }
 
@@ -232,16 +236,16 @@ userBtns.forEach(btn => {
     }
 
     if (selection.id = 'travail') {
-      
+
     }
 
   })
 })
 
 
-// const startBtn = document.getElementById('start');
-// startBtn.addEventListener('click', (e) => {
-//   startBtn.classList.toggle('active');
+// const pickStart = document.getElementById('start');
+// pickStart.addEventListener('click', (e) => {
+//   pickStart.classList.toggle('active');
 //   let btnActive = e.target.classList.contains('active');
 
 //   userPlaceKnight(btnActive);
