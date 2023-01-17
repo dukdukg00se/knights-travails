@@ -87,13 +87,13 @@ function createUI() {
   pickStart.id = 'start';
   randomStart.type = 'button';
   randomStart.textContent = 'Random Start';
-  randomStart.id = 'random';
+  randomStart.id = 'random-start';
   pickEnd.type = 'button';
   pickEnd.textContent = 'Pick End';
   pickEnd.id = 'end';
   randomEnd.type = 'button';
   randomEnd.textContent = 'Random End';
-  randomEnd.id = 'random';
+  randomEnd.id = 'random-end';
   travail.type = 'button';
   travail.textContent = 'Travail';
   travail.id = 'travail';         
@@ -166,8 +166,9 @@ function createCheckerBoard() {
       let square = document.createElement('div');
       square.classList.add('square');
       // square.textContent = `x: ${j} y: ${i}`
-      square.dataset.xCoord = j;
-      square.dataset.yCoord = i;
+      // square.dataset.xCoord = j;
+      // square.dataset.yCoord = i;
+      square.dataset.coord = `[${j}, ${i}]`;
 
       if (i % 2) { // Same as (i % 2 != 0)
         if (j % 2) { // Same as (j % 2 != 0)
@@ -202,6 +203,8 @@ const contentContainer = document.getElementById('content');
 contentContainer.append(createHeader(), createMainContent());
 
 /*************/
+let start;
+let end;
 
 let userBtns = document.querySelectorAll('button');
 userBtns.forEach(btn => {
@@ -209,56 +212,52 @@ userBtns.forEach(btn => {
     let selection = e.target;
     let prevSelection = document.querySelector('.active');
 
+    
     if (prevSelection && prevSelection.id != selection.id) {
       prevSelection.classList.remove('active');
     }
-    
-    // selection.classList.add('active');
 
     if (selection.id === 'start') {
       selection.classList.add('active');
-      logCoord();
-      // if (selection.classList.contains('active')) {
-      //   userPlaceKnight();
-      // } else {
-      //   userPlaceKnight(false);
-      // }
+      logUserCoord();
+
     }
 
-    if (selection.id === 'random') {
-      logCoord(false);
-      randomKnight();
+    if (selection.id === 'random-start') {
+      logUserCoord(false);
+      start = randomCoord();
+
     }
 
     if (selection.id === 'end') {
       selection.classList.add('active');
-      logCoord();
+      logUserCoord();
+
     }
 
-    if (selection.id = 'travail') {
+    if (selection.id === 'random-end') {
+      logUserCoord(false);
+      end = randomCoord();
 
+    }
+
+    if (selection.id === 'travail') {
+      console.log(start, end);
     }
 
   })
 })
 
 
-// const pickStart = document.getElementById('start');
-// pickStart.addEventListener('click', (e) => {
-//   pickStart.classList.toggle('active');
-//   let btnActive = e.target.classList.contains('active');
-
-//   userPlaceKnight(btnActive);
-
-// })
-
-
-function logCoord(bool = true) {
+function logUserCoord(bool = true) {
   const board = document.querySelector('.checker-board');
-
+  
   if (bool) {
     board.onclick = (e) => {
-      console.log(e.target)
+      let coordArr = JSON.parse(e.target.dataset.coord)
+      // console.log(coordArr);
+      return coordArr;
+
     }
   } else {
     board.onclick = null;
@@ -274,11 +273,12 @@ function logCoord(bool = true) {
   // console.dir(board);
 }
 
-function randomKnight() {
+function randomCoord() {
   let squares = document.querySelectorAll('.square');
   let random = Math.floor(Math.random() * 65);
-  console.log(random);
-  console.log(squares[random]);
+
+  let randomSquare = squares[random].dataset.coord;
+  return randomSquare;
 }
 
 
