@@ -164,7 +164,12 @@ main section:last-of-type {
   transition: all 0.5s;
 }
 
-.start,
+.start {
+  /* background-color: red; */
+  border: solid 0.5rem red;
+  transition: all 0.5s;
+}
+
 .end {
   background-color: red;
   transition: all 0.5s;
