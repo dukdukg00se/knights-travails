@@ -170,6 +170,16 @@ function createCheckerBoard() {
       // square.dataset.yCoord = i;
       square.dataset.coord = `[${j}, ${i}]`;
 
+      let knightImg = document.createElement('img');
+      knightImg.classList.add('knight');
+      knightImg.src = '../src/assets/images/chess-knight.svg';
+
+      let squareNmbr = document.createElement('h3');
+      squareNmbr.classList.add('number');
+      
+
+
+
       if (i % 2) { // Same as (i % 2 != 0)
         if (j % 2) { // Same as (j % 2 != 0)
           square.classList.add('black');
@@ -179,6 +189,8 @@ function createCheckerBoard() {
           square.classList.add('black');
         }
       }
+
+      square.append(knightImg, squareNmbr);
         
       row.append(square);
     }
@@ -219,44 +231,115 @@ userBtns.forEach(btn => {
 
     if (selection.id === 'start') {
       selection.classList.add('active');
-      logUserCoord();
+      logUserCoord(e);
 
     }
 
     if (selection.id === 'random-start') {
-      logUserCoord(false);
-      start = randomCoord();
+      logUserCoord(e);
+      // start = JSON.parse(randomCoord());
 
     }
 
     if (selection.id === 'end') {
       selection.classList.add('active');
-      logUserCoord();
+      logUserCoord(e);
 
     }
 
     if (selection.id === 'random-end') {
-      logUserCoord(false);
-      end = randomCoord();
+      logUserCoord(e);
+
+      endString = randomCoord(); // fn returns string data
+      end = JSON.parse(endString);
+
+      let square = document.querySelector(`[data-coord="${endString}"]`);
+
+      let prevSq = document.querySelector('.end');
+      if (prevSq) {
+
+        if (prevSq.dataset.coord !== square.dataset.coord) {
+          prevSq.classList.remove('end');
+        }
+      }
+
+      square.classList.add('end');
 
     }
 
     if (selection.id === 'travail') {
-      console.log(start, end);
+
+      if (start && end) {
+
+        let kTree = new Tree(start, end);
+        console.log(kTree.getPath());
+      } else {
+        console.log('pick start and end')
+      }
+
+      // let kTree = new Tree(start, end);
+      // console.log(kTree.getPath());
     }
 
   })
 })
 
 
-function logUserCoord(bool = true) {
+function logUserCoord(e) {
   const board = document.querySelector('.checker-board');
   
-  if (bool) {
+  if (e.target.id === 'start') {
     board.onclick = (e) => {
-      let coordArr = JSON.parse(e.target.dataset.coord)
+
+      let square = e.target.dataset.coord ? e.target : e.target.parentElement;
+
+      let prevSq = board.querySelector('.start');
+      if (prevSq) {
+
+        if (prevSq.dataset.coord !== square.dataset.coord) {
+          prevSq.classList.remove('start');
+          prevSq.firstChild.style.opacity = '0';
+        }
+      }
+
+      let coordArr = JSON.parse(square.dataset.coord);
+      square.firstChild.style.opacity = '1';
+      square.classList.add('start');
+
+      // return coordArr;
+      start = coordArr;
+
+      // let knightImg = document.createElement('img');
+      // knightImg.src = '../src/assets/images/chess-knight.svg';
+      // knightImg.classList.add('knight');
+
+      // e.target.append(knightImg);
+      // e.target.classList.toggle('start');
+
+    }
+
+  } else if (e.target.id === 'end') {
+    board.onclick = (e) => {
+      console.log(e.target)
+      console.log(board.contains(e.target))
+
+      let square = e.target.dataset.coord ? e.target : e.target.parentElement;
+
+      let prevSq = board.querySelector('.end');
+      if (prevSq) {
+
+        if (prevSq.dataset.coord !== square.dataset.coord) {
+          prevSq.classList.remove('end');
+          prevSq.firstChild.style.opacity = '0';
+        }
+      }
+
+      let coordArr = JSON.parse(square.dataset.coord);
+      square.classList.add('end');
+
       // console.log(coordArr);
-      return coordArr;
+      // return coordArr;
+      end = coordArr;
 
     }
   } else {
@@ -278,7 +361,10 @@ function randomCoord() {
   let random = Math.floor(Math.random() * 65);
 
   let randomSquare = squares[random].dataset.coord;
+
+  console.log('In random fn: ', randomSquare);
   return randomSquare;
+  // return JSON.parse(randomSquare);
 }
 
 
