@@ -220,110 +220,118 @@ let end;
 
 let userBtns = document.querySelectorAll('button');
 userBtns.forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    let selection = e.target;
-    let prevSelection = document.querySelector('.active');
+  btn.addEventListener('click', manageSelection)
+});
+  
 
-    
-    if (prevSelection && prevSelection.id != selection.id) {
-      prevSelection.classList.remove('active');
-    }
+function manageSelection(e) {
+  let selection = e.target;
+  let prevSelection = document.querySelector('.active');
 
-    if (selection.id === 'start') {
-      selection.classList.add('active');
-      logUserCoord(e);
+  
+  if (prevSelection && prevSelection.id != selection.id) {
+    prevSelection.classList.remove('active');
+  }
 
-    }
+  if (selection.id === 'start') {
+    selection.classList.add('active');
 
-    if (selection.id === 'random-start') {
-      logUserCoord(e);
-      // start = JSON.parse(randomCoord());
-
-      let startString = randomCoord(); // fn returns string data
-      start = JSON.parse(startString);
-
-      let square = document.querySelector(`[data-coord="${startString}"]`);
-
-      let prevSq = document.querySelector('.start');
-      if (prevSq) {
-        if (prevSq.dataset.coord !== square.dataset.coord) {
-          prevSq.classList.remove('start');
-          prevSq.firstChild.style.opacity = '0';
-        }
-      }
-
-      square.firstChild.style.opacity = '1';
-      square.classList.add('start');
-
-
-    }
-
-    if (selection.id === 'end') {
-      selection.classList.add('active');
-      logUserCoord(e);
-
-    }
-
-    if (selection.id === 'random-end') {
-      logUserCoord(e);
-
-      let endString = randomCoord(); // fn returns string data
-      end = JSON.parse(endString);
-
-      let square = document.querySelector(`[data-coord="${endString}"]`);
-
-      let prevSq = document.querySelector('.end');
-      if (prevSq) {
-        if (prevSq.dataset.coord !== square.dataset.coord) {
-          prevSq.classList.remove('end');
-        }
-      }
-
-      square.classList.add('end');
-
-    }
-
-    if (selection.id === 'travail') {
-
-      if (start && end) {
-
-        showPath();
-
-        // let kTree = new Tree(start, end);
-
-        // let knightPath = kTree.getPath();
-
-        // for (let i = 0; i < knightPath.length; i++) {
-        //   let mvString = JSON.stringify(knightPath[i]).replace(',', ', ');
-        //   console.log(mvString);
-
-        //   let square = document.querySelector(`[data-coord="${mvString}"]`);
-        //   square.classList.add('end');
-        //   square.firstChild.style.opacity = '1';
-        //   square.lastChild.textContent = i;
-        // }
-
-        // knightPath.forEach(mvArr => {
-        //   let mvString = JSON.stringify(mvArr).replace(',', ', ');;
-        //   console.log(mvString);
-
-        //   let square = document.querySelector(`[data-coord="${mvString}"]`);
-        //   square.classList.add('end');
-        // })
-      }
-      
-      else {
-        console.log('pick start and end')
-      }
-
-    }
-
-    if (selection.id === 'clear') {
+    let needReset = isPathDisplayed();
+    if (needReset) {
       clearGame();
     }
 
-  })
-})
+    logUserCoord(e);
+  }
+
+  if (selection.id === 'random-start') {
+    logUserCoord(e);
+
+    let needReset = isPathDisplayed();
+    if (needReset) {
+      clearGame();
+    }
+
+    let startString = randomCoord(); // fn returns string data
+    start = JSON.parse(startString);
+
+    let square = document.querySelector(`[data-coord="${startString}"]`);
+
+    let prevSq = document.querySelector('.start');
+    if (prevSq) {
+      if (prevSq.dataset.coord !== square.dataset.coord) {
+        prevSq.classList.remove('start');
+        prevSq.firstChild.style.opacity = '0';
+      }
+    }
+
+    square.firstChild.style.opacity = '1';
+    square.classList.add('start');
+  }
+
+  if (selection.id === 'end') {
+    selection.classList.add('active');
+
+    let needReset = isPathDisplayed();
+    if (needReset) {
+      clearGame();
+    }
+
+    logUserCoord(e);
+  }
+
+  if (selection.id === 'random-end') {
+    logUserCoord(e);
+
+    let needReset = isPathDisplayed();
+    if (needReset) {
+      clearGame();
+    }
+
+    let endString = randomCoord(); // fn returns string data
+    end = JSON.parse(endString);
+
+    let square = document.querySelector(`[data-coord="${endString}"]`);
+
+    let prevSq = document.querySelector('.end');
+    if (prevSq) {
+      if (prevSq.dataset.coord !== square.dataset.coord) {
+        prevSq.classList.remove('end');
+      }
+    }
+
+    square.classList.add('end');
+
+  }
+
+  if (selection.id === 'travail') {
+
+    if (start && end) {
+      let needReset = isPathDisplayed();
+      if (needReset) {
+        console.log('done');
+        return;
+      }
+
+      showPath();
+    }
+    
+    else {
+
+      if (!start) {
+        alert('Select a start position');
+      } else if (!end) {
+        alert('Select an end position');
+      }
+
+    }
+
+  }
+
+  if (selection.id === 'clear') {
+    clearGame();
+  }
+};
 
 
 function logUserCoord(e) {
@@ -361,8 +369,6 @@ function logUserCoord(e) {
 
   } else if (e.target.id === 'end') {
     board.onclick = (e) => {
-      // console.log(e.target)
-      // console.log(board.contains(e.target))
 
       let square = e.target.dataset.coord ? e.target : e.target.parentElement;
 
@@ -378,7 +384,6 @@ function logUserCoord(e) {
       let coordArr = JSON.parse(square.dataset.coord);
       square.classList.add('end');
 
-      // console.log(coordArr);
       // return coordArr;
       end = coordArr;
 
@@ -435,6 +440,8 @@ function wait(input) {
   })
 }
 
+
+
 function clearGame() {
   clearBoard();
   clearData();
@@ -457,4 +464,14 @@ function clearBoard() {
 function clearData() {
   start = null;
   end = null;
+}
+
+function isPathDisplayed() {
+  let startSq = document.querySelector('.start');
+
+  if (startSq) {
+    return !!startSq.lastChild.textContent;
+  } else {
+    return false;
+  }
 }
