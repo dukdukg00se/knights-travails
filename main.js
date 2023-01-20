@@ -239,6 +239,23 @@ userBtns.forEach(btn => {
       logUserCoord(e);
       // start = JSON.parse(randomCoord());
 
+      let startString = randomCoord(); // fn returns string data
+      start = JSON.parse(startString);
+
+      let square = document.querySelector(`[data-coord="${startString}"]`);
+
+      let prevSq = document.querySelector('.start');
+      if (prevSq) {
+        if (prevSq.dataset.coord !== square.dataset.coord) {
+          prevSq.classList.remove('start');
+          prevSq.firstChild.style.opacity = '0';
+        }
+      }
+
+      square.firstChild.style.opacity = '1';
+      square.classList.add('start');
+
+
     }
 
     if (selection.id === 'end') {
@@ -250,14 +267,13 @@ userBtns.forEach(btn => {
     if (selection.id === 'random-end') {
       logUserCoord(e);
 
-      endString = randomCoord(); // fn returns string data
+      let endString = randomCoord(); // fn returns string data
       end = JSON.parse(endString);
 
       let square = document.querySelector(`[data-coord="${endString}"]`);
 
       let prevSq = document.querySelector('.end');
       if (prevSq) {
-
         if (prevSq.dataset.coord !== square.dataset.coord) {
           prevSq.classList.remove('end');
         }
@@ -320,8 +336,8 @@ function logUserCoord(e) {
 
   } else if (e.target.id === 'end') {
     board.onclick = (e) => {
-      console.log(e.target)
-      console.log(board.contains(e.target))
+      // console.log(e.target)
+      // console.log(board.contains(e.target))
 
       let square = e.target.dataset.coord ? e.target : e.target.parentElement;
 
@@ -360,9 +376,11 @@ function randomCoord() {
   let squares = document.querySelectorAll('.square');
   let random = Math.floor(Math.random() * 65);
 
-  let randomSquare = squares[random].dataset.coord;
+  let selected = squares[random];
+  console.log(selected)
 
-  console.log('In random fn: ', randomSquare);
+  let randomSquare = selected.dataset.coord;
+
   return randomSquare;
   // return JSON.parse(randomSquare);
 }
