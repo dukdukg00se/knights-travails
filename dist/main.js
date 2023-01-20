@@ -318,6 +318,10 @@ userBtns.forEach(btn => {
 
     }
 
+    if (selection.id === 'clear') {
+      clearGame();
+    }
+
   })
 })
 
@@ -431,4 +435,26 @@ function wait(input) {
   })
 }
 
+function clearGame() {
+  clearBoard();
+  clearData();
+}
+function clearBoard() {
+  let squares = document.querySelectorAll('.square');
+  squares.forEach(sq => {
+    if (sq.classList.contains('start')) {
+      sq.classList.toggle('start');
+    }
 
+    if (sq.classList.contains('end')) {
+      sq.classList.toggle('end');
+    }
+
+    sq.firstChild.style.opacity = '0';
+    sq.lastChild.textContent = '';
+  })
+}
+function clearData() {
+  start = null;
+  end = null;
+}
