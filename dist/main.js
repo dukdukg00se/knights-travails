@@ -287,14 +287,35 @@ userBtns.forEach(btn => {
 
       if (start && end) {
 
-        let kTree = new Tree(start, end);
-        console.log(kTree.getPath());
-      } else {
+        showPath();
+
+        // let kTree = new Tree(start, end);
+
+        // let knightPath = kTree.getPath();
+
+        // for (let i = 0; i < knightPath.length; i++) {
+        //   let mvString = JSON.stringify(knightPath[i]).replace(',', ', ');
+        //   console.log(mvString);
+
+        //   let square = document.querySelector(`[data-coord="${mvString}"]`);
+        //   square.classList.add('end');
+        //   square.firstChild.style.opacity = '1';
+        //   square.lastChild.textContent = i;
+        // }
+
+        // knightPath.forEach(mvArr => {
+        //   let mvString = JSON.stringify(mvArr).replace(',', ', ');;
+        //   console.log(mvString);
+
+        //   let square = document.querySelector(`[data-coord="${mvString}"]`);
+        //   square.classList.add('end');
+        // })
+      }
+      
+      else {
         console.log('pick start and end')
       }
 
-      // let kTree = new Tree(start, end);
-      // console.log(kTree.getPath());
     }
 
   })
@@ -374,15 +395,40 @@ function logUserCoord(e) {
 
 function randomCoord() {
   let squares = document.querySelectorAll('.square');
-  let random = Math.floor(Math.random() * 65);
+  let random = Math.floor(Math.random() * 64);
 
   let selected = squares[random];
-  console.log(selected)
 
   let randomSquare = selected.dataset.coord;
 
   return randomSquare;
   // return JSON.parse(randomSquare);
+}
+
+async function showPath() {
+  let kTree = new Tree(start, end);
+  let knightPath = kTree.getPath();  
+  
+  for (let i = 0; i < knightPath.length; i++) {
+
+    let square = await wait(knightPath[i]);    
+
+    square.classList.add('end');
+    square.firstChild.style.opacity = '1';
+    square.lastChild.textContent = i;
+  }
+}
+
+function wait(input) {
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      let mvString = JSON.stringify(input).replace(',', ', ');
+      let square = document.querySelector(`[data-coord="${mvString}"]`);
+
+      resolve(square);
+    }, 800)
+  })
 }
 
 
