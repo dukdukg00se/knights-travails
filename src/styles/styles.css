@@ -134,6 +134,11 @@ main section:last-of-type {
 .square {
   width: 12.5%;
   height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: no-repeat center/70% url(../assets/images/chess-knight.svg); */
 }
 
 .black {
@@ -143,6 +148,26 @@ main section:last-of-type {
 .active {
   border-style: inset;
   background-color: #6b2e11;
+}
+
+.knight {
+  width: 70%;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.number {
+  font-size: 4.5rem;
+  color: white;
+  z-index: 1;
+  position: absolute;
+  transition: all 0.5s;
+}
+
+.start,
+.end {
+  background-color: red;
+  transition: all 0.5s;
 }
 
 @media (max-width: 700px) {
