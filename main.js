@@ -73,8 +73,8 @@ function createHeader() {
   return header;
 }
 
-function createUI() {
-  const ui = document.createElement('section');
+function createBtnsPanel() {
+  const panel = document.createElement('section');
   const pickStart = document.createElement('button');
   const randomStart = document.createElement('button');
   const pickEnd = document.createElement('button');
@@ -101,8 +101,8 @@ function createUI() {
   clear.textContent = 'Clear';
   clear.id = 'clear';
 
-  ui.append(pickStart, randomStart, pickEnd, randomEnd, travail, clear);
-  return ui;
+  panel.append(pickStart, randomStart, pickEnd, randomEnd, travail, clear);
+  return panel;
 }
 
 function createRowMarkers() {
@@ -116,6 +116,7 @@ function createRowMarkers() {
   }
   return rowMarkersContainer;
 }
+
 function createColumnMarkers() {
   const columnMarkersContainer = document.createElement('div');
   columnMarkersContainer.classList.add('column-marker');
@@ -155,6 +156,7 @@ function createColumnMarkers() {
   }
   return columnMarkersContainer;
 }
+
 function createCheckerBoard() {
   const checkerBoard = document.createElement('div');
   checkerBoard.classList.add('checker-board');
@@ -199,7 +201,8 @@ function createCheckerBoard() {
 
   return checkerBoard;
 }
-function createBoard() {
+
+function createGameBoard() {
   const board = document.createElement('section');
   board.append(createRowMarkers(), createColumnMarkers(), createCheckerBoard());
   return board;
@@ -207,7 +210,7 @@ function createBoard() {
 
 function createMainContent() {
   const main = document.createElement('main');
-  main.append(createUI(), createBoard());
+  main.append(createBtnsPanel(), createGameBoard());
   return main;
 }
 
