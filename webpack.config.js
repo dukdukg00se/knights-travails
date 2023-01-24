@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -9,7 +8,6 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true,
   },
   module: {
     rules: [
@@ -23,14 +21,4 @@ module.exports = {
       },
     ],
   },
-
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Knights Travails',
-      template: './src/template.html',
-      // favicon config option appears to only work with .ico ext
-      // favicon: './src/assets/images/favicon.ico',
-      // favicon: './src/assets/images/smile.png',
-    }),
-  ],
 };
