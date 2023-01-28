@@ -61,6 +61,21 @@ function hlEndSq(current, prev) {
   }
 }
 
+function hlSq(current, prev, state) {
+  if (!current.classList.contains('square')) {
+    return;
+  }
+
+  if (state === 'start') {
+    current.firstChild.style.opacity = '1';
+
+    if (prev)
+  }
+
+
+
+}
+
 function wait(input) {
   return new Promise((resolve) => {
     setTimeout(() => {
