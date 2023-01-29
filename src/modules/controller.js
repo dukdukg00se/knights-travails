@@ -1,5 +1,5 @@
-import { randomCoord, logUserCoord, clearData } from './data-handlers';
-import { clearBoard, hlActiveBtn, showPath } from './display';
+import { logUserCoord, clearData } from './data-handlers';
+import { clearBoard, panelHl, showPath } from './display';
 
 function clearGame() {
   clearBoard();
@@ -18,13 +18,8 @@ function isPathDisplayed() {
 
 function managebtn(e) {
   const btn = e.target;
-  const prevbtn = document.querySelector('.active');
 
-  // if (isPathDisplayed()) {
-  //   clearGame();
-  // }
-
-  hlActiveBtn(btn, prevbtn);
+  panelHl(btn);
 
   if (btn.id === 'start') {
     if (isPathDisplayed()) {
@@ -35,28 +30,12 @@ function managebtn(e) {
   }
 
   if (btn.id === 'random-start') {
-    logUserCoord(e);
-
     const needReset = isPathDisplayed();
     if (needReset) {
       clearGame();
     }
 
-    const startString = randomCoord(); // fn returns string data
-    start = JSON.parse(startString);
-
-    const square = document.querySelector(`[data-coord="${startString}"]`);
-
-    const prevSq = document.querySelector('.start');
-    if (prevSq) {
-      if (prevSq.dataset.coord !== square.dataset.coord) {
-        prevSq.classList.remove('start');
-        prevSq.firstChild.style.opacity = '0';
-      }
-    }
-
-    square.firstChild.style.opacity = '1';
-    square.classList.add('start');
+    logUserCoord(e);
   }
 
   if (btn.id === 'end') {
@@ -69,26 +48,12 @@ function managebtn(e) {
   }
 
   if (btn.id === 'random-end') {
-    logUserCoord(e);
-
     const needReset = isPathDisplayed();
     if (needReset) {
       clearGame();
     }
 
-    const endString = randomCoord(); // fn returns string data
-    end = JSON.parse(endString);
-
-    const square = document.querySelector(`[data-coord="${endString}"]`);
-
-    const prevSq = document.querySelector('.end');
-    if (prevSq) {
-      if (prevSq.dataset.coord !== square.dataset.coord) {
-        prevSq.classList.remove('end');
-      }
-    }
-
-    square.classList.add('end');
+    logUserCoord(e);
   }
 
   if (btn.id === 'travail') {
