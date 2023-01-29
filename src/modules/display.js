@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 
 import * as content from './content';
-import Tree from './data-tree-class';
 import { getKnightPath } from './data-handlers';
 
 function clearBoard() {
@@ -25,55 +24,40 @@ function initView() {
   contentContainer.append(content.createHeader(), content.createMainContent());
 }
 
-function hlActiveBtn(current, prev) {
-  if (prev && prev.id !== current.id) {
-    prev.classList.remove('active');
+function panelHl(btn) {
+  const prevBtn = document.querySelector('.active');
+
+  if (prevBtn && prevBtn.id !== btn.id) {
+    prevBtn.classList.remove('active');
   }
 
-  if (current.id === 'start' || current.id === 'end') {
-    current.classList.add('active');
+  if (btn.id === 'start' || btn.id === 'end') {
+    btn.classList.add('active');
   }
 }
 
-function hlStartSq(current, prev) {
-  if (!current.classList.contains('square')) {
+function boardHl(sq, position) {
+  const prevSq = document.querySelector(`.${position}`);
+
+  if (!sq.classList.contains('square')) {
     return;
   }
 
-  current.firstChild.style.opacity = '1';
-  current.classList.add('start');
-
-  if (prev) {
-    if (prev.dataset.coord !== current.dataset.coord) {
-      prev.firstChild.style.opacity = '0';
-      prev.classList.remove('start');
+  if (position === 'start' || position === 'random-start') {
+    if (prevSq) {
+      prevSq.firstChild.style.opacity = '0';
+      prevSq.classList.remove('start');
     }
-  }
-}
 
-function hlEndSq(current, prev) {
-  current.classList.add('end');
-  if (prev) {
-    if (prev.dataset.coord !== current.dataset.coord) {
-      prev.firstChild.style.opacity = '0';
-      prev.classList.remove('end');
+    sq.firstChild.style.opacity = '1';
+    sq.classList.add('start');
+  } else if (position === 'end' || position === 'random-end') {
+    if (prevSq) {
+      prevSq.classList.remove('end');
     }
+
+    sq.classList.add('end');
   }
-}
-
-function hlSq(current, prev, state) {
-  if (!current.classList.contains('square')) {
-    return;
-  }
-
-  if (state === 'start') {
-    current.firstChild.style.opacity = '1';
-
-    if (prev)
-  }
-
-
-
 }
 
 function wait(input) {
@@ -102,4 +86,4 @@ async function showPath() {
   }
 }
 
-export { clearBoard, initView, hlActiveBtn, hlStartSq, hlEndSq, showPath };
+export { clearBoard, initView, panelHl, showPath, boardHl };
