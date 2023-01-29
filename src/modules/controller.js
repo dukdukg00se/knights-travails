@@ -21,7 +21,17 @@ function managebtn(e) {
 
   panelHl(btn);
 
-  if (btn.id === 'start') {
+  if (btn.id === 'travail') {
+    // if (start && end) {
+    //   if (isPathDisplayed()) {
+    //     return;
+    //   }
+    //   showPath();
+    //   // logUserCoord(false);
+    // }
+  } else if (btn.id === 'clear') {
+    clearGame();
+  } else {
     if (isPathDisplayed()) {
       clearGame();
     }
@@ -29,52 +39,60 @@ function managebtn(e) {
     logUserCoord(e);
   }
 
-  if (btn.id === 'random-start') {
-    const needReset = isPathDisplayed();
-    if (needReset) {
-      clearGame();
-    }
+  // if (btn.id === 'start') {
+  //   if (isPathDisplayed()) {
+  //     clearGame();
+  //   }
 
-    logUserCoord(e);
-  }
+  //   logUserCoord(e);
+  // }
 
-  if (btn.id === 'end') {
-    const needReset = isPathDisplayed();
-    if (needReset) {
-      clearGame();
-    }
+  // if (btn.id === 'random-start') {
+  //   const needReset = isPathDisplayed();
+  //   if (needReset) {
+  //     clearGame();
+  //   }
 
-    logUserCoord(e);
-  }
+  //   logUserCoord(e);
+  // }
 
-  if (btn.id === 'random-end') {
-    const needReset = isPathDisplayed();
-    if (needReset) {
-      clearGame();
-    }
+  // if (btn.id === 'end') {
+  //   const needReset = isPathDisplayed();
+  //   if (needReset) {
+  //     clearGame();
+  //   }
 
-    logUserCoord(e);
-  }
+  //   logUserCoord(e);
+  // }
 
-  if (btn.id === 'travail') {
-    // showPath();
+  // if (btn.id === 'random-end') {
+  //   const needReset = isPathDisplayed();
+  //   if (needReset) {
+  //     clearGame();
+  //   }
 
-    if (start && end) {
-      if (isPathDisplayed()) {
-        return;
-      }
-      showPath();
-      logUserCoord(false);
-    } else if (!start) {
-      alert('Select a start position');
-    } else if (!end) {
-      alert('Select an end position');
-    }
-  }
+  //   logUserCoord(e);
+  // }
 
-  if (btn.id === 'clear') {
-    clearGame();
-  }
+  // if (btn.id === 'travail') {
+  //   // showPath();
+
+  //   if (start && end) {
+  //     if (isPathDisplayed()) {
+  //       return;
+  //     }
+  //     showPath();
+  //     // logUserCoord(false);
+  //   } else if (!start) {
+  //     alert('Select a start position');
+  //   } else if (!end) {
+  //     alert('Select an end position');
+  //   }
+  // }
+
+  // if (btn.id === 'clear') {
+  //   clearGame();
+  // }
 }
 
 function initGame() {
