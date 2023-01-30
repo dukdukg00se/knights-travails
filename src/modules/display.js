@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 
 import * as content from './content';
-import { getKnightPath } from './data-handlers';
 
 function clearBoard() {
+  const board = document.querySelector('.checker-board');
+  board.onclick = null;
   const squares = document.querySelectorAll('.square');
   squares.forEach((square) => {
     if (square.classList.contains('start')) {
@@ -19,6 +20,7 @@ function clearBoard() {
   });
 }
 
+// Think about moving this
 function initView() {
   const contentContainer = document.getElementById('content');
   contentContainer.append(content.createHeader(), content.createMainContent());
@@ -60,7 +62,7 @@ function boardHl(sq, position) {
   }
 }
 
-function wait(input) {
+function getSquare(input) {
   return new Promise((resolve) => {
     setTimeout(() => {
       const mvString = JSON.stringify(input).replace(',', ', ');
@@ -71,14 +73,9 @@ function wait(input) {
   });
 }
 
-async function showPath() {
-  // const kTree = new Tree(start, end);
-  // const knightPath = kTree.getPath();
-
-  const knightPath = getKnightPath();
-
-  for (let i = 0; i < knightPath.length; i++) {
-    const square = await wait(knightPath[i]);
+async function displayPath(path) {
+  for (let i = 0; i < path.length; i += 1) {
+    const square = await getSquare(path[i]);
 
     square.classList.add('end');
     square.firstChild.style.opacity = '1';
@@ -86,4 +83,4 @@ async function showPath() {
   }
 }
 
-export { clearBoard, initView, panelHl, showPath, boardHl };
+export { clearBoard, initView, panelHl, displayPath, boardHl };
