@@ -17,4 +17,15 @@ function getRandomCoord() {
   return randomSquareCoord;
 }
 
-export { isPathDisplayed, getRandomCoord };
+function getDOMSq(input) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const mvString = JSON.stringify(input).replace(',', ', ');
+      const square = document.querySelector(`[data-coord="${mvString}"]`);
+
+      resolve(square);
+    }, 800);
+  });
+}
+
+export { isPathDisplayed, getRandomCoord, getDOMSq };
