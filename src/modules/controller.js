@@ -1,105 +1,68 @@
-import { logUserCoord, clearData } from './data-handlers';
-import { clearBoard, panelHl, showPath } from './display';
+import knightData from './data-knight-class';
+import * as display from './display-mod';
+import * as helper from './helpers';
 
 function clearGame() {
-  clearBoard();
-  clearData();
-  logUserCoord(false);
+  display.clearBoard();
+  knightData.clearData();
 }
 
-function isPathDisplayed() {
-  const startSq = document.querySelector('.start');
-
-  if (startSq) {
-    return !!startSq.lastChild.textContent;
+function setPosition(sq, pos) {
+  if (pos === 'start') {
+    knightData.start = JSON.parse(sq.dataset.coord);
+  } else {
+    knightData.finish = JSON.parse(sq.dataset.coord);
   }
-  return false;
+
+  display.boardHl(sq, pos);
 }
 
-function managebtn(e) {
+function startGame(e) {
   const btn = e.target;
+  const board = document.querySelector('.checker-board');
 
-  panelHl(btn);
+  display.btnHl(btn);
 
   if (btn.id === 'travail') {
-    // if (start && end) {
-    //   if (isPathDisplayed()) {
-    //     return;
-    //   }
-    //   showPath();
-    //   // logUserCoord(false);
-    // }
+    board.onclick = null;
+
+    if (knightData.start && knightData.finish) {
+      if (helper.isPathDisplayed()) return;
+
+      display.showPath(knightData.path);
+    }
   } else if (btn.id === 'clear') {
     clearGame();
   } else {
-    if (isPathDisplayed()) {
+    const pos = /start/.test(btn.id) ? 'start' : 'end';
+    let targSq;
+
+    if (helper.isPathDisplayed()) {
       clearGame();
     }
 
-    logUserCoord(e);
+    if (btn.id === 'start' || btn.id === 'end') {
+      board.onclick = (brdEvnt) => {
+        targSq = brdEvnt.target.dataset.coord
+          ? brdEvnt.target
+          : brdEvnt.target.parentElement;
+
+        setPosition(targSq, pos);
+      };
+    } else if (btn.id === 'random-start' || btn.id === 'random-end') {
+      targSq = document.querySelector(
+        `[data-coord="${helper.getRandomCoord()}"]`
+      );
+      setPosition(targSq, pos);
+    }
   }
-
-  // if (btn.id === 'start') {
-  //   if (isPathDisplayed()) {
-  //     clearGame();
-  //   }
-
-  //   logUserCoord(e);
-  // }
-
-  // if (btn.id === 'random-start') {
-  //   const needReset = isPathDisplayed();
-  //   if (needReset) {
-  //     clearGame();
-  //   }
-
-  //   logUserCoord(e);
-  // }
-
-  // if (btn.id === 'end') {
-  //   const needReset = isPathDisplayed();
-  //   if (needReset) {
-  //     clearGame();
-  //   }
-
-  //   logUserCoord(e);
-  // }
-
-  // if (btn.id === 'random-end') {
-  //   const needReset = isPathDisplayed();
-  //   if (needReset) {
-  //     clearGame();
-  //   }
-
-  //   logUserCoord(e);
-  // }
-
-  // if (btn.id === 'travail') {
-  //   // showPath();
-
-  //   if (start && end) {
-  //     if (isPathDisplayed()) {
-  //       return;
-  //     }
-  //     showPath();
-  //     // logUserCoord(false);
-  //   } else if (!start) {
-  //     alert('Select a start position');
-  //   } else if (!end) {
-  //     alert('Select an end position');
-  //   }
-  // }
-
-  // if (btn.id === 'clear') {
-  //   clearGame();
-  // }
 }
 
 function initGame() {
   const userBtns = document.querySelectorAll('button');
   userBtns.forEach((btn) => {
-    btn.addEventListener('click', managebtn);
+    btn.addEventListener('click', startGame);
   });
 }
 
-export { initGame, clearGame };
+export default initGame;
