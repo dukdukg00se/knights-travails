@@ -1,32 +1,24 @@
-/* eslint-disable no-param-reassign */
-
-import * as content from './content';
+import { getDOMSq } from './helpers';
 
 function clearBoard() {
   const board = document.querySelector('.checker-board');
   board.onclick = null;
   const squares = document.querySelectorAll('.square');
-  squares.forEach((square) => {
-    if (square.classList.contains('start')) {
-      square.classList.toggle('start');
+  squares.forEach((sq) => {
+    if (sq.classList.contains('start')) {
+      sq.classList.toggle('start');
     }
 
-    if (square.classList.contains('end')) {
-      square.classList.toggle('end');
+    if (sq.classList.contains('end')) {
+      sq.classList.toggle('end');
     }
 
-    square.firstChild.style.opacity = '0';
-    square.lastChild.textContent = '';
+    sq.firstChild.style.opacity = '0';
+    sq.lastChild.textContent = '';
   });
 }
 
-// Think about moving this
-function initView() {
-  const contentContainer = document.getElementById('content');
-  contentContainer.append(content.createHeader(), content.createMainContent());
-}
-
-function panelHl(btn) {
+function btnHl(btn) {
   const prevBtn = document.querySelector('.active');
 
   if (prevBtn && prevBtn.id !== btn.id) {
@@ -62,25 +54,13 @@ function boardHl(sq, position) {
   }
 }
 
-function getSquare(input) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const mvString = JSON.stringify(input).replace(',', ', ');
-      const square = document.querySelector(`[data-coord="${mvString}"]`);
-
-      resolve(square);
-    }, 800);
-  });
-}
-
-async function displayPath(path) {
+async function showPath(path) {
   for (let i = 0; i < path.length; i += 1) {
-    const square = await getSquare(path[i]);
-
+    const square = await getDOMSq(path[i]);
     square.classList.add('end');
     square.firstChild.style.opacity = '1';
     square.lastChild.textContent = i;
   }
 }
 
-export { clearBoard, initView, panelHl, displayPath, boardHl };
+export { clearBoard, btnHl, showPath, boardHl };
