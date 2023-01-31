@@ -145,4 +145,9 @@ function createMainContent() {
   return main;
 }
 
-export { createHeader, createMainContent };
+function initView() {
+  const contentContainer = document.getElementById('content');
+  contentContainer.append(createHeader(), createMainContent());
+}
+
+export default initView;
