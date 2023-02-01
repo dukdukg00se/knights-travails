@@ -1,4 +1,5 @@
 /* eslint-disable no-lonely-if */
+import knight from '../assets/images/chess-knight.svg';
 
 function createHeader() {
   const header = document.createElement('header');
@@ -109,7 +110,7 @@ function createGameBoard() {
 
         const knightImg = document.createElement('img');
         knightImg.classList.add('knight');
-        knightImg.src = '../src/assets/images/chess-knight.svg';
+        knightImg.src = knight;
 
         const squareNmbr = document.createElement('h3');
         squareNmbr.classList.add('number');
