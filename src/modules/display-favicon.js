@@ -1,8 +1,6 @@
-import knight from '../assets/images/chess-knight.svg';
-
-function setFavicon() {
+function setFavicon(imgSrc) {
   const icon = document.querySelector('link[rel="shortcut icon"]');
-  icon.href = knight;
+  icon.href = imgSrc;
 }
 
 export default setFavicon;
